@@ -40,7 +40,6 @@ class TestItems(unittest.TestCase):
         self.assertEqual(data[1]["name"], "item2")
         self.assertEqual(data[2]["name"], "item3")
 
-    @unittest.skip
     def test_item_delete(self):
         pres = self.client().post('/item/', data=json.dumps(self.items),
                 content_type="application/json")
@@ -49,8 +48,8 @@ class TestItems(unittest.TestCase):
         self.assertEqual(dres.status_code, 200)
         # Test to validate that result is empty list now
         gres = self.client().get('/item/')
-        print(gres.data)
-        self.assertEqual(len(gres.data), 0)
+        self.assertEqual(gres.status_code, 200)
+        self.assertEqual(json.loads(gres.data), [])
 
     def test_item_id_get(self):
         pres = self.client().post('/item/', data=json.dumps(self.items),

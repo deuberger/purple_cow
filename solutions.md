@@ -18,3 +18,8 @@
 
     source .env
     python3 run.py
+
+# FUTURE
+
+ * Refactor tests to improve code reuse
+ * Return number of items deleted for DELETE /item
