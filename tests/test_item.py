@@ -62,20 +62,20 @@ class TestItems(unittest.TestCase):
         gdata = json.loads(gres.data)
         self.assertEqual(gdata["name"], "item2")
 
-    #def test_bucketlist_can_be_edited(self):
-    #    """Test API can edit an existing bucketlist. (PUT request)"""
-    #    rv = self.client().post(
-    #        '/bucketlists/',
-    #        data={'name': 'Eat, pray and love'})
-    #    self.assertEqual(rv.status_code, 201)
-    #    rv = self.client().put(
-    #        '/bucketlists/1',
-    #        data={
-    #            "name": "Dont just eat, but also pray and love :-)"
-    #        })
-    #    self.assertEqual(rv.status_code, 200)
-    #    results = self.client().get('/bucketlists/1')
-    #    self.assertIn('Dont just eat', str(results.data))
+    def test_item_id_get(self):
+        pres = self.client().post('/item/', data=json.dumps(self.items),
+                content_type="application/json")
+        self.assertEqual(pres.status_code, 201)
+        pdata = json.loads(pres.data)
+        put_res = self.client().put(
+            '/item/{}'.format(pdata[1]['id']),
+            data = {"name": "Freddy"})
+        self.assertEqual(put_res.status_code, 200)
+        gres = self.client().get(
+            '/item/{}'.format(pdata[1]['id']))
+        self.assertEqual(gres.status_code, 200)
+        gdata = json.loads(gres.data)
+        self.assertEqual(gdata["name"], "Freddy")
 
     #def test_bucketlist_deletion(self):
     #    """Test API can delete an existing bucketlist. (DELETE request)."""

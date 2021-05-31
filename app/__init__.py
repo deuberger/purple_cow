@@ -69,13 +69,11 @@ def create_app(config_name):
 
         elif request.method == 'PUT':
             name = str(request.data.get('name', ''))
-            bucketlist.name = name
-            bucketlist.save()
+            item.name = name
+            item.save()
             response = jsonify({
-                'id': bucketlist.id,
-                'name': bucketlist.name,
-                'date_created': bucketlist.date_created,
-                'date_modified': bucketlist.date_modified
+                'id': item.id,
+                'name': item.name
             })
             response.status_code = 200
             return response
