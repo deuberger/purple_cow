@@ -1,6 +1,5 @@
 flask==1.1.4
 flask-api
-flask-script
 flask-migrate
 flask_restful
 flask-sqlalchemy
