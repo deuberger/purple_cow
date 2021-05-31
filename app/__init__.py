@@ -38,15 +38,13 @@ def create_app(config_name):
             return response
         else:
             # GET
-            bucketlists = Bucketlist.get_all()
+            items = Item.get_all()
             results = []
 
-            for bucketlist in bucketlists:
+            for item in items:
                 obj = {
-                    'id': bucketlist.id,
-                    'name': bucketlist.name,
-                    'date_created': bucketlist.date_created,
-                    'date_modified': bucketlist.date_modified
+                    'id': item.id,
+                    'name': item.name
                 }
                 results.append(obj)
             response = jsonify(results)

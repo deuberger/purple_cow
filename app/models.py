@@ -16,7 +16,7 @@ class Item(db.Model):
 
     @staticmethod
     def get_all():
-        return Items.query.all()
+        return Item.query.all()
 
     def delete(self):
         db.session.delete(self)

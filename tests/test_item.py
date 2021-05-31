@@ -29,13 +29,16 @@ class TestItems(unittest.TestCase):
         self.assertEqual(data[1]["name"], "item2")
         self.assertEqual(data[2]["name"], "item3")
 
-    #def test_api_can_get_all_bucketlists(self):
-    #    """Test API can get a bucketlist (GET request)."""
-    #    res = self.client().post('/bucketlists/', data=self.bucketlist)
-    #    self.assertEqual(res.status_code, 201)
-    #    res = self.client().get('/bucketlists/')
-    #    self.assertEqual(res.status_code, 200)
-    #    self.assertIn('Go to Borabora', str(res.data))
+    def test_item_get(self):
+        res = self.client().post('/item/', data=json.dumps(self.items),
+                content_type="application/json")
+        self.assertEqual(res.status_code, 201)
+        res = self.client().get('/item/')
+        self.assertEqual(res.status_code, 200)
+        data = json.loads(res.data)
+        self.assertEqual(data[0]["name"], "item1")
+        self.assertEqual(data[1]["name"], "item2")
+        self.assertEqual(data[2]["name"], "item3")
 
     #def test_api_can_get_bucketlist_by_id(self):
     #    """Test API can get a single bucketlist by using it's id."""
