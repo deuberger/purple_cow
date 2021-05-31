@@ -62,10 +62,10 @@ def create_app(config_name):
             abort(404)
 
         if request.method == 'DELETE':
-            bucketlist.delete()
-            return {
-            "message": "bucketlist {} deleted successfully".format(bucketlist.id) 
-         }, 200
+            item.delete()
+            response = Response()
+            response.status_code = 200
+            return response
 
         elif request.method == 'PUT':
             name = str(request.data.get('name', ''))

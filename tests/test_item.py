@@ -77,17 +77,16 @@ class TestItems(unittest.TestCase):
         gdata = json.loads(gres.data)
         self.assertEqual(gdata["name"], "Freddy")
 
-    #def test_bucketlist_deletion(self):
-    #    """Test API can delete an existing bucketlist. (DELETE request)."""
-    #    rv = self.client().post(
-    #        '/bucketlists/',
-    #        data={'name': 'Eat, pray and love'})
-    #    self.assertEqual(rv.status_code, 201)
-    #    res = self.client().delete('/bucketlists/1')
-    #    self.assertEqual(res.status_code, 200)
-    #    # Test to see if it exists, should return a 404
-    #    result = self.client().get('/bucketlists/1')
-    #    self.assertEqual(result.status_code, 404)
+    def test_bucketlist_deletion(self):
+        pres = self.client().post('/item/', data=json.dumps(self.items),
+                content_type="application/json")
+        self.assertEqual(pres.status_code, 201)
+        pdata = json.loads(pres.data)
+        dres = self.client().delete('/item/1')
+        self.assertEqual(dres.status_code, 200)
+        # Test to see if it exists, should return a 404
+        gresult = self.client().get('/item/1')
+        self.assertEqual(gresult.status_code, 404)
 
     def tearDown(self):
         """teardown all initialized variables."""
