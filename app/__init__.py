@@ -1,5 +1,3 @@
-import json
-
 from flask_api import FlaskAPI
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -25,15 +23,15 @@ def create_app(config_name):
     @app.route('/item/', methods=['POST', 'GET'])
     def item():
         if request.method == "POST":
-            rdata = []
+            results = []
             for i in request.data:
                 item = Item(name=i["name"])
                 item.save()
-                rdata.append({
+                results.append({
                     'id': item.id,
                     'name': item.name
                 })
-            response = Response(json.dumps(rdata), mimetype='application/json')
+            response = jsonify(results)
             response.status_code = 201
             return response
         else:
