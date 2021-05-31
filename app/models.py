@@ -1,20 +1,13 @@
 from app import db
 
 
-class Bucketlist(db.Model):
-    """This class represents the bucketlist table."""
-
-    __tablename__ = 'bucketlists'
+class Item(db.Model):
+    __tablename__ = 'items'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(
-        db.DateTime, default=db.func.current_timestamp(),
-        onupdate=db.func.current_timestamp())
 
     def __init__(self, name):
-        """initialize with name."""
         self.name = name
 
     def save(self):
@@ -23,11 +16,11 @@ class Bucketlist(db.Model):
 
     @staticmethod
     def get_all():
-        return Bucketlist.query.all()
+        return Items.query.all()
 
     def delete(self):
         db.session.delete(self)
         db.session.commit()
 
     def __repr__(self):
-        return "<Bucketlist: {}>".format(self.name)
+        return "<Item: {}>".format(self.name)

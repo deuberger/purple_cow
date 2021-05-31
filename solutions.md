@@ -1,4 +1,8 @@
+# Assumptions
 
+ * Assumed items id is determined by the app and not setable by the user
+
+# TODO
     sudo apt install postgresql libpq-dev
     sudo -u postgres createdb test_db
     sudo -u postgres createdb purple_cow
@@ -9,6 +13,7 @@
 
     pip3 install - requirements.txt
 
+    DATABASE_URL="postgresql://localhost/test_db" python3 -m flask db upgrade
     python3 -m unittest
 
     source .env

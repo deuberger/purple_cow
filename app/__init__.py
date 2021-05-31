@@ -1,8 +1,10 @@
+import json
+
 from flask_api import FlaskAPI
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
-from flask import request, jsonify, abort
+from flask import request, jsonify, abort, Response
 
 from instance.config import app_config
 
@@ -11,7 +13,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 def create_app(config_name):
-    from app.models import Bucketlist
+    from app.models import Item
 
     app = FlaskAPI(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
@@ -20,21 +22,20 @@ def create_app(config_name):
     db.init_app(app)
     migrate.init_app(app, db)
 
-    @app.route('/bucketlists/', methods=['POST', 'GET'])
-    def bucketlists():
+    @app.route('/item/', methods=['POST', 'GET'])
+    def item():
         if request.method == "POST":
-            name = str(request.data.get('name', ''))
-            if name:
-                bucketlist = Bucketlist(name=name)
-                bucketlist.save()
-                response = jsonify({
-                    'id': bucketlist.id,
-                    'name': bucketlist.name,
-                    'date_created': bucketlist.date_created,
-                    'date_modified': bucketlist.date_modified
+            rdata = []
+            for i in request.data:
+                item = Item(name=i["name"])
+                item.save()
+                rdata.append({
+                    'id': item.id,
+                    'name': item.name
                 })
-                response.status_code = 201
-                return response
+            response = Response(json.dumps(rdata), mimetype='application/json')
+            response.status_code = 201
+            return response
         else:
             # GET
             bucketlists = Bucketlist.get_all()
