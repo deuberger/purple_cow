@@ -40,6 +40,16 @@ class TestItems(unittest.TestCase):
         self.assertEqual(data[1]["name"], "item2")
         self.assertEqual(data[2]["name"], "item3")
 
+    def test_item_delete(self):
+        res = self.client().post('/item/', data=json.dumps(self.items),
+                content_type="application/json")
+        self.assertEqual(res.status_code, 201)
+        res = self.client().delete('/item/')
+        self.assertEqual(res.status_code, 200)
+        # Test to validate that result is empty list now
+        result = self.client().get('/item/')
+        self.assertEqual(len(res.data), 0)
+
     #def test_api_can_get_bucketlist_by_id(self):
     #    """Test API can get a single bucketlist by using it's id."""
     #    rv = self.client().post('/bucketlists/', data=self.bucketlist)

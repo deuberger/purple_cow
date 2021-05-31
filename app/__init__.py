@@ -20,7 +20,7 @@ def create_app(config_name):
     db.init_app(app)
     migrate.init_app(app, db)
 
-    @app.route('/item/', methods=['POST', 'GET'])
+    @app.route('/item/', methods=['POST', 'GET', 'DELETE'])
     def item():
         if request.method == "POST":
             results = []
@@ -34,7 +34,7 @@ def create_app(config_name):
             response = jsonify(results)
             response.status_code = 201
             return response
-        else:
+        elif request.method == "GET":
             # GET
             items = Item.get_all()
             results = []
@@ -48,7 +48,11 @@ def create_app(config_name):
             response = jsonify(results)
             response.status_code = 200
             return response
-
+        elif request.method == 'DELETE':
+            Item.delete_all()
+            response = Response()
+            response.status_code = 200
+            return response
 
     @app.route('/bucketlists/<int:id>', methods=['GET', 'PUT', 'DELETE'])
     def bucketlist_manipulation(id, **kwargs):

@@ -18,6 +18,10 @@ class Item(db.Model):
     def get_all():
         return Item.query.all()
 
+    @staticmethod
+    def delete_all():
+        return Item.query.delete()
+
     def delete(self):
         db.session.delete(self)
         db.session.commit()
