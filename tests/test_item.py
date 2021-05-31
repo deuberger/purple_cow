@@ -30,35 +30,38 @@ class TestItems(unittest.TestCase):
         self.assertEqual(data[2]["name"], "item3")
 
     def test_item_get(self):
-        res = self.client().post('/item/', data=json.dumps(self.items),
+        pres = self.client().post('/item/', data=json.dumps(self.items),
                 content_type="application/json")
-        self.assertEqual(res.status_code, 201)
-        res = self.client().get('/item/')
-        self.assertEqual(res.status_code, 200)
-        data = json.loads(res.data)
+        self.assertEqual(pres.status_code, 201)
+        gres = self.client().get('/item/')
+        self.assertEqual(gres.status_code, 200)
+        data = json.loads(gres.data)
         self.assertEqual(data[0]["name"], "item1")
         self.assertEqual(data[1]["name"], "item2")
         self.assertEqual(data[2]["name"], "item3")
 
+    @unittest.skip
     def test_item_delete(self):
-        res = self.client().post('/item/', data=json.dumps(self.items),
+        pres = self.client().post('/item/', data=json.dumps(self.items),
                 content_type="application/json")
-        self.assertEqual(res.status_code, 201)
-        res = self.client().delete('/item/')
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(pres.status_code, 201)
+        dres = self.client().delete('/item/')
+        self.assertEqual(dres.status_code, 200)
         # Test to validate that result is empty list now
-        result = self.client().get('/item/')
-        self.assertEqual(len(res.data), 0)
+        gres = self.client().get('/item/')
+        print(gres.data)
+        self.assertEqual(len(gres.data), 0)
 
-    #def test_api_can_get_bucketlist_by_id(self):
-    #    """Test API can get a single bucketlist by using it's id."""
-    #    rv = self.client().post('/bucketlists/', data=self.bucketlist)
-    #    self.assertEqual(rv.status_code, 201)
-    #    result_in_json = json.loads(rv.data.decode('utf-8').replace("'", "\""))
-    #    result = self.client().get(
-    #        '/bucketlists/{}'.format(result_in_json['id']))
-    #    self.assertEqual(result.status_code, 200)
-    #    self.assertIn('Go to Borabora', str(result.data))
+    def test_item_id_get(self):
+        pres = self.client().post('/item/', data=json.dumps(self.items),
+                content_type="application/json")
+        self.assertEqual(pres.status_code, 201)
+        pdata = json.loads(pres.data)
+        gres = self.client().get(
+            '/item/{}'.format(pdata[1]['id']))
+        self.assertEqual(gres.status_code, 200)
+        gdata = json.loads(gres.data)
+        self.assertEqual(gdata["name"], "item2")
 
     #def test_bucketlist_can_be_edited(self):
     #    """Test API can edit an existing bucketlist. (PUT request)"""

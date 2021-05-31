@@ -54,11 +54,10 @@ def create_app(config_name):
             response.status_code = 200
             return response
 
-    @app.route('/bucketlists/<int:id>', methods=['GET', 'PUT', 'DELETE'])
-    def bucketlist_manipulation(id, **kwargs):
-     # retrieve a buckelist using it's ID
-        bucketlist = Bucketlist.query.filter_by(id=id).first()
-        if not bucketlist:
+    @app.route('/item/<int:id>', methods=['GET', 'PUT', 'DELETE'])
+    def item_manipulation(id, **kwargs):
+        item = Item.query.filter_by(id=id).first()
+        if not item:
             # Raise an HTTPException with a 404 not found status code
             abort(404)
 
@@ -83,10 +82,8 @@ def create_app(config_name):
         else:
             # GET
             response = jsonify({
-                'id': bucketlist.id,
-                'name': bucketlist.name,
-                'date_created': bucketlist.date_created,
-                'date_modified': bucketlist.date_modified
+                'id': item.id,
+                'name': item.name
             })
             response.status_code = 200
             return response
