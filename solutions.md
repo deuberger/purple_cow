@@ -19,7 +19,21 @@
     source .env
     python3 run.py
 
+    sudo apt install docker.io docker-compose
+
+    sudo ./build.sh
+    sudo ./run-docker.sh
+
+    sudo docker-compose up
+
+    sudo ./docker-compose-restart-clean.sh
+
+    curl http://localhost:5000/item/
+
 # FUTURE
 
+ * Upgrade to a production worthy web server
  * Refactor tests to improve code reuse
  * Return number of items deleted for DELETE /item
+ * Clean up / improve environemnt and config settings
+ * Add automated integration tests

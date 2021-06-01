@@ -1,0 +1,34 @@
+version: '3.3'
+
+services:
+  api:
+    build: .
+    depends_on:
+      - db
+    environment:
+      APP_SETTINGS: production
+      SECRET: adlfkjlkdjlafjl;ajfldakjlfkjdal;kfjl;adjflkjdalfjl
+      DATABASE_URL: postgresql+psycopg2://purple:purple@db/purple
+      FLASK_APP: run.py
+    networks:
+      - default
+    ports:
+      - 5000:5000
+    volumes:
+      - ./app:/usr/src/app/app
+      - ./migrations:/usr/src/app/migrations
+    restart: always
+
+  db:
+    environment:
+      POSTGRES_USER: purple
+      POSTGRES_PASSWORD: purple
+      POSTGRES_DB: purple
+    image: postgres:latest
+    networks:
+      - default
+    ports:
+      - 5405:5432
+    restart: always
+    volumes:
+      - /tmp/postgres-data:/var/lib/postgresql/data

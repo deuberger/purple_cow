@@ -27,6 +27,7 @@ class StagingConfig(Config):
 class ProductionConfig(Config):
     """Configurations for Production."""
     DEBUG = False
+    SQLALCHEMY_DATABASE_URI: os.environ['DATABASE_URL']
     TESTING = False
 
 
