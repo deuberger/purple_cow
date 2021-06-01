@@ -23,21 +23,21 @@ This is the purple cow prototype application.
     python3 -m flask db upgrade
     python3 -m unittest
 
-# Running
+# Install Dependencies
 
-    # Install dependencies
     sudo apt install docker.io docker-compose
 
-    # Stop postgres to avoid conflicts if you have it running locally
+# Run
 
-    # Start
     sudo docker-compose up
+
+# Other commands
 
     # Restart
     sudo docker-compose down
     sudo docker-compose up
 
-    # Much more serious restart
+    # Much more serious restart and show logs
     sudo ./docker-compose-restart-clean.sh
 
 Note that there may be spurious logs during startup since docker compose doesn't validate the DB is ready to accept connections before starting app.
