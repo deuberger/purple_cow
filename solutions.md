@@ -44,7 +44,12 @@ Note that there may be spurious logs during startup since docker compose doesn't
 
 # Examples
 
-    curl http://localhost:5000/item/
+    curl -H "Content-Type: application/json" -X POST -d '[{"name": "item1"},{"name": "item2"}]' http://localhost:3000/item/
+    curl http://localhost:3000/item/
+    curl -X DELETE http://localhost:3000/item/
+    curl http://localhost:3000/item/<id>
+    curl -H "Content-Type: application/json" -X PUT -d '{"name": "Freddy"}' http://localhost:3000/item/<id>
+    curl -X DELETE http://localhost:3000/item/<id>
 
 # FUTURE
 
@@ -55,7 +60,6 @@ Note that there may be spurious logs during startup since docker compose doesn't
  * Return number of items deleted for DELETE /item
  * Clean up / improve environemnt and config settings
  * Config has setups that aren't being used
- * Add more exmple curl lines above
  * Add automated integration tests
  * The docker-compose-restart-clean.sh script could be better (or maybe there's
    a better solution altogether)
