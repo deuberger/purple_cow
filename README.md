@@ -1,1 +1,1 @@
-# purple_cow
+See [solutions.md](solutions.md)
