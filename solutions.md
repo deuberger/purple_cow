@@ -5,7 +5,6 @@
 # TODO
     sudo apt install postgresql libpq-dev
     sudo -u postgres createdb test_db
-    sudo -u postgres createdb purple_cow
     sudo -u postgres createuser azureuser
 
     pg_hba.conf
@@ -13,20 +12,19 @@
 
     pip3 install - requirements.txt
 
-    DATABASE_URL="postgresql://localhost/test_db" python3 -m flask db upgrade
-    python3 -m unittest
-
     source .env
-    python3 run.py
+    python3 -m flask db upgrade
+    python3 -m unittest
 
     sudo apt install docker.io docker-compose
 
-    sudo ./build.sh
-    sudo ./run-docker.sh
+    sudo ./docker-compose-restart-clean.sh
 
+    sudo docker-compose down
     sudo docker-compose up
 
-    sudo ./docker-compose-restart-clean.sh
+
+Note that there may be spurious logs during startup since docker compose doesn't validate the DB is ready to accept connections before starting app.
 
     curl http://localhost:5000/item/
 
