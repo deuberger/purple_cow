@@ -15,6 +15,8 @@ This is the purple cow prototype application.
     pg_hba.conf
     host    all             all             127.0.0.1/32            trust
 
+    sudo systemctl restart postgresql
+
     pip3 install - requirements.txt
 
     source .env
@@ -27,7 +29,6 @@ This is the purple cow prototype application.
     sudo apt install docker.io docker-compose
 
     # Stop postgres to avoid conflicts if you have it running locally
-    sudo systemctl stop postgresql
 
     # Start
     sudo docker-compose up
@@ -47,6 +48,7 @@ Note that there may be spurious logs during startup since docker compose doesn't
 
 # FUTURE
 
+ * Make the port easily configurable and documented
  * Upgrade to a production worthy web server
  * Refactor tests to improve code reuse
  * Update tests to use docker postgresql container (same setup as prod)
